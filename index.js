@@ -8,7 +8,7 @@ const DEFAULT_OPTIONS = {
 };
 
 module.exports = {
-  name: 'ember-service-worker-emberfire-messaging'
+  name: 'ember-service-worker-emberfire-messaging',
 
   treeForServiceWorker(swTree, appTree) {
     const { root } = this;
