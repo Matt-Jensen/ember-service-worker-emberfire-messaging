@@ -1,17 +1,25 @@
 {
   "name": "ember-service-worker-emberfire-messaging",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Out the box Firebase Cloud Messaging support with emberfire.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-service-worker-plugin",
+    "emberfire",
+    "firebase",
+    "push-notifications",
+    "messaging"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Matt-Jensen",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Matt-Jensen/ember-service-worker-emberfire-messaging.git"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
