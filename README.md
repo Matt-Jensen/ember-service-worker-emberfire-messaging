@@ -1,6 +1,7 @@
 # ember-service-worker-emberfire-messaging
 
-A push notification Ember Service Worker plugin for Firebase Cloud Messaging using [Emberfire](https://github.com/firebase/emberFire). ⚠️ Currently in beta ⚠️.
+A push notification Ember Service Worker plugin for Firebase Cloud Messaging using [Emberfire](https://github.com/firebase/emberFire).
+⚠️ Currently in beta ⚠️!
 
 ## Installation
 `ember install ember-service-worker-emberfire-messaging@beta`
@@ -83,7 +84,7 @@ curl -X POST -H "Authorization: key=<YOUR_SERVER_KEY>" -H "Content-Type: applica
 }' "https://fcm.googleapis.com/fcm/send"
 ```
 `YOUR_SERVER_KEY` can be found in the firebase console under Project Settings > Cloud Messaging > Server key.
-`DEVICE_REGISTRATION_TOKEN` is the token you requested via the firebase-message service.
+`DEVICE_REGISTRATION_TOKEN` is the token you requested via this addon's firebase-message service.
 
 [Please refer to the Firebase docs for more information]( https://firebase.google.com/docs/cloud-messaging/js/first-message)
 

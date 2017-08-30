@@ -1,7 +1,7 @@
 {
   "name": "ember-service-worker-emberfire-messaging",
   "version": "0.0.0",
-  "description": "Out the box Firebase Cloud Messaging support with emberfire.",
+  "description": "Firebase Cloud Messaging service worker support for Emberfire apps.",
   "keywords": [
     "ember-addon",
     "ember-service-worker-plugin",
