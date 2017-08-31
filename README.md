@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Matt-Jensen/ember-service-worker-emberfire-messaging.svg?branch=master)](https://travis-ci.org/Matt-Jensen/ember-service-worker-emberfire-messaging)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-service-worker-emberfire-messaging.svg)](http://emberobserver.com/addons/ember-service-worker-emberfire-messaging)
+
 # ember-service-worker-emberfire-messaging
 
 A push notification Ember Service Worker plugin for Firebase Cloud Messaging using [Emberfire](https://github.com/firebase/emberFire).
