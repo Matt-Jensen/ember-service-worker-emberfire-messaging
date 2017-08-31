@@ -4,6 +4,7 @@ import { inject } from '@ember/service';
 import { get, set } from '@ember/object';
 import EmberError from '@ember/error';
 import { assert } from '@ember/debug';
+import { run } from '@ember/runloop';
 
 export default Service.extend({
   firebaseApp: inject(),
@@ -53,12 +54,17 @@ export default Service.extend({
    *  `messaging.requestPermission()` & `messaging.getToken()`
    *  promise chain
    *
+   * Wait until after service worker registration or firebase
+   * messaging service will attempt to load the default messaging SW.
+   *
    * @return {Promise} token
    */
   initialize() {
-    const messaging = get(this, 'messaging');
-    return messaging.requestPermission()
-    .then(this.getToken.bind(this));
+    return this.serviceWorkerReady().then(() => {
+      const messaging = get(this, 'messaging');
+      return messaging.requestPermission()
+      .then(this.getToken.bind(this));
+    });
   },
 
   /**
@@ -117,5 +123,26 @@ export default Service.extend({
      */
     messaging.onMessage((payload) =>
       get(this, '_subscribers').forEach(fn => fn(payload)));
+  },
+
+  /**
+   * Resolve once service worker successfully registered
+   * @return {Promise}
+   */
+  serviceWorkerReady() {
+    return new RSVP.Promise((resolve, reject) => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready
+        .then(() => {
+          /*
+           Ensure Firebase recieves SW first
+           via: instance-initializer:register-firebase-service-worker
+           */
+          run(resolve);
+        }, reject);
+      } else {
+        reject();
+      }
+    });
   }
 });

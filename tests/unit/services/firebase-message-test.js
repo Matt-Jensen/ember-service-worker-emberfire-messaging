@@ -58,12 +58,15 @@ test('it invokes `messaging.requestPermission` and resolves token on initialize'
         return RSVP.Promise.resolve();
       }
     }).create(),
-    getToken: () => token
+    getToken: () => token,
+    serviceWorkerReady: () => RSVP.Promise.resolve()
   });
 
   service.initialize()
-  .then((t) => assert.strictEqual(t, token, 'resolved a token'));
-  assert.strictEqual(wasCalled, true, 'invoked `requestPermission`');
+  .then((t) => {
+    assert.strictEqual(t, token, 'resolved a token');
+    assert.strictEqual(wasCalled, true, 'invoked `requestPermission`');
+  });
 });
 
 test('it rejects promise chain when request for token resolves nothing on initialize', function(assert) {
@@ -74,6 +77,7 @@ test('it rejects promise chain when request for token resolves nothing on initia
       requestPermission: () => RSVP.Promise.resolve(),
       getToken: () => RSVP.Promise.resolve('') // resolve falsey token
     }).create(),
+    serviceWorkerReady: () => RSVP.Promise.resolve()
   });
 
   service.initialize()
