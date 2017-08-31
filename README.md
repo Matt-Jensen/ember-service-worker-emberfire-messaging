@@ -64,17 +64,14 @@ export default default Route.extend({
      React to Firebase message when app is being viewed by user
      */
     this.get('firebaseMessage').subscribe((message) => {
-      console.log('firebase message', message);
+      console.log('FCM JSON', message);
     });
-
-    // Firebase Messaging service interface:
-    // https://firebase.google.com/docs/reference/js/firebase.messaging.Messaging
-    this.get('firebaseMessage.messaging');
   }
 });
 ```
 
 ## Misc Options:
+Customize this addon by adding any of the following to the `config/environment.js` file:
 ```js
 var ENV = {
   'esw-emberfire-messaging': {
