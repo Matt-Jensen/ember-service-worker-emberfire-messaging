@@ -11,8 +11,7 @@ module.exports = {
   name: 'ember-service-worker-emberfire-messaging',
 
   treeForServiceWorker(swTree, appTree) {
-    const { root } = this;
-    const config = this.config.call({root}, this.app.env);
+    const config = this.config.call(this.app.project, this.app.env);
 
     const options = Object.assign({},
       DEFAULT_OPTIONS,
