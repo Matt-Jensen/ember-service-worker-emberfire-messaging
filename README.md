@@ -1,10 +1,9 @@
 # ember-service-worker-emberfire-messaging
 
 A push notification Ember Service Worker plugin for Firebase Cloud Messaging using [Emberfire](https://github.com/firebase/emberFire).
-⚠️ Currently in beta ⚠️!
 
 ## Installation
-`ember install ember-service-worker-emberfire-messaging@beta`
+`ember install ember-service-worker-emberfire-messaging`
 
 ## Configuration
 The configuration is done in the `config/environment.js` file:
