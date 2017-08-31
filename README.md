@@ -24,6 +24,18 @@ var ENV = {
 ```
 Message sender Id can be found in your firebase console > project settings > add app button > Add Firebase to your web app.
 
+### Set Your Sender ID
+In order to receive messages `gcm_sender_id` must be configured in your manifest.json file.  For this purpose I recommend using [Ember Web App](https://github.com/san650/ember-web-app) where in your `config/manifest.js` you should copy and append the following:
+```js
+module.exports = function() {
+  return {
+    // ...
+    // gcm_sender_id: '103953800507'
+  }
+}
+```
+This Google Cloud Sender ID is not the same as your message sender ID.
+
 Additional options:
 ```js
 var ENV = {
