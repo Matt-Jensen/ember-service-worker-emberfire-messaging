@@ -9,7 +9,7 @@ A push notification Ember Service Worker plugin for Firebase Cloud Messaging usi
 `ember install ember-service-worker-emberfire-messaging`
 
 ## Configuration
-The configuration is done in the `config/environment.js` file:
+Step 1: basic setup is done in the `config/environment.js` file:
 ```js
 // Ensure Emberfire is correctly configured
 var ENV = {
@@ -18,37 +18,28 @@ var ENV = {
     authDomain: 'YOUR-FIREBASE-APP.firebaseapp.com',
     databaseURL: 'https://YOUR-FIREBASE-APP.firebaseio.com',
     storageBucket: 'YOUR-FIREBASE-APP.appspot.com',
+    projectId: 'my-firebase-app', // optional
     messagingSenderId: "123456789012" // Required!
   }
 };
 ```
 Message sender Id can be found in your firebase console > project settings > add app button > Add Firebase to your web app.
 
-### Set Your Sender ID
-In order to receive messages `gcm_sender_id` must be configured in your manifest.json file.  For this purpose I recommend using [Ember Web App](https://github.com/san650/ember-web-app) where in your `config/manifest.js` you should copy and append the following:
+### Set GCM Sender ID
+Step 2: `gcm_sender_id` must be configured in your manifest.json file.  For this purpose I recommend using [Ember Web App](https://github.com/san650/ember-web-app) where in your `config/manifest.js` you should add the following:
 ```js
 module.exports = function() {
   return {
     // ...
     // gcm_sender_id: '103953800507'
-  }
+  };
 }
 ```
-This Google Cloud Sender ID is not the same as your message sender ID.
+This Google Cloud Sender ID is not the same as your message sender ID.  **You can simply copy the value `103953800507` into your manifest.json!**
 
-Additional options:
-```js
-var ENV = {
-  'esw-emberfire-messaging': {
-    firebaseVersion: '4.2.0', // default (Firebase version used by SW)
-    defaultBackgroundMessageTitle: 'New Message' // default (title for background message)
-  }
-};
-```
+### Request User Permission
+Step 3: Use the Firebase Message Service to request the user's permission and subscribe to new message events.
 
-## Firebase Message Service
-
-Request user permission and subscribe to new messages:
 ```js
 export default default Route.extend({
   firebaseMessage: inject(),
@@ -81,6 +72,16 @@ export default default Route.extend({
     this.get('firebaseMessage.messaging');
   }
 });
+```
+
+## Misc Options:
+```js
+var ENV = {
+  'esw-emberfire-messaging': {
+    firebaseVersion: '4.2.0', // default (Firebase version used by SW)
+    defaultBackgroundMessageTitle: 'New Message' // default (fallback title for background message)
+  }
+};
 ```
 
 ## Triggering a Firebase Message
