@@ -8,7 +8,7 @@ import {
   MESSAGING_SENDER_ID,
   FIREBASE_VERSION,
   DEFAULT_BACKGROUND_MESSAGE_TITLE
-} from 'emberfire-messaging/service-worker/config';
+} from 'ember-service-worker-emberfire-messaging/service-worker/config';
 
 importScripts(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`);
 importScripts(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-messaging.js`);
