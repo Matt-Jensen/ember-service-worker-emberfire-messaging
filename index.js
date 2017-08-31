@@ -1,4 +1,5 @@
 /* eslint-env node */
+'use strict';
 const Config = require('./lib/config');
 const mergeTrees = require('broccoli-merge-trees');
 
