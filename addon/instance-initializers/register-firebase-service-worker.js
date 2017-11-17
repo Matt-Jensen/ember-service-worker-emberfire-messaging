@@ -6,19 +6,21 @@
  * @param {navigator} _navigator
  */
 export function initialize(applicationInstance, _navigator) {
-  if (!_navigator) _navigator = navigator;
+  if (typeof FastBoot === 'undefined') {
+    if (!_navigator) _navigator = window && window.navigator;
 
+    if (_navigator && 'serviceWorker' in _navigator) {
+      const firebase = applicationInstance.lookup('service:firebase-app');
+      const { options = {} } = firebase;
 
-  if (typeof FastBoot === 'undefined' && 'serviceWorker' in _navigator) {
-    const firebase = applicationInstance.lookup('service:firebase-app');
-    const { options = {} } = firebase;
+      if (!options.messagingSenderId) {
+        throw new Error('Please set `firebase: { messagingSenderId }` in your config/environment.js');
+      }
 
-    if (!options.messagingSenderId) {
-      throw new Error('Please set `firebase: { messagingSenderId }` in your config/environment.js');
+      _navigator.serviceWorker.ready.then((reg) => {
+        return firebase.messaging().useServiceWorker(reg);
+      });
     }
-
-    _navigator.serviceWorker.ready.then((reg) =>
-      firebase.messaging().useServiceWorker(reg));
   }
 }
 

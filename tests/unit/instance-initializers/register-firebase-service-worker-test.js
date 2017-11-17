@@ -1,4 +1,4 @@
-import RSVP from 'rsvp';
+import { resolve } from 'rsvp';
 import Ember from 'ember';
 import { initialize } from 'dummy/instance-initializers/register-firebase-service-worker';
 import { module, test } from 'qunit';
@@ -29,17 +29,17 @@ test('it throws an error when `messagingSenderId` is not configured', function(a
 test('it registers activated service worker with firebase', function(assert) {
   assert.expect(1);
 
-  const serviceWorkerRegistration = {};
+  const swRegistration = {};
   this.appInstance.register('service:firebase-app', Service.extend({
     options: { messagingSenderId: '123' },
     messaging: () => ({
-      useServiceWorker: (reg) => assert.strictEqual(reg, serviceWorkerRegistration, 'using activated service worker')
+      useServiceWorker: (reg) => assert.strictEqual(reg, swRegistration, 'using activated service worker')
     })
   }));
 
   const stubNavigator = {
     serviceWorker: {
-      ready: RSVP.Promise.resolve(serviceWorkerRegistration)
+      ready: resolve(swRegistration)
     }
   };
 
