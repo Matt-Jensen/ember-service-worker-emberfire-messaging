@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Matt-Jensen/ember-service-worker-emberfire-messaging.svg?branch=master)](https://travis-ci.org/Matt-Jensen/ember-service-worker-emberfire-messaging)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-service-worker-emberfire-messaging.svg)](http://emberobserver.com/addons/ember-service-worker-emberfire-messaging)
+![Ember Version](https://embadge.io/v1/badge.svg?start=2.12.0)
 
 # ember-service-worker-emberfire-messaging
 
