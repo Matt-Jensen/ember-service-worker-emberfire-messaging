@@ -26,7 +26,11 @@ export default Service.extend({
    * @type {String}
    */
   token: '',
+  _fastboot: computed(function () {
+    let owner = getOwner(this);
 
+    return owner.lookup('service:fastboot');
+  }),
   /**
    * Add subscriber to `onMessage` event
    * @param  {Function} fn
@@ -87,7 +91,9 @@ export default Service.extend({
 
   init() {
     this._super(...arguments);
-
+    if (get(this, '_fastboot.isFastBoot')) {
+      return;
+    }
     /*
      Set `messaging` instance
      */
