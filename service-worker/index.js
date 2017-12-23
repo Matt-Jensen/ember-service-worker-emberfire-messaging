@@ -7,7 +7,8 @@ import {
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
   FIREBASE_VERSION,
-  DEFAULT_BACKGROUND_MESSAGE_TITLE
+  DEFAULT_BACKGROUND_MESSAGE_TITLE,
+  NOTIFICATION_OPTIONS
 } from 'ember-service-worker-emberfire-messaging/service-worker/config';
 
 importScripts(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`);
@@ -28,8 +29,16 @@ const messaging = firebase.messaging();
  * Called when user is not viewing web page
  * @return {Promise} NotificationEvent
  */
-messaging.setBackgroundMessageHandler(function(payload) {
-  const { notification = {} } = payload;
-  const title = notification.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
-  return self.registration.showNotification(title, notification);
+messaging.setBackgroundMessageHandler(function (payload) {
+  const {
+    notification = {},
+      data = {}
+  } = payload;
+  const notificationOptions = Object.assign({},
+    notification,
+    data,
+    NOTIFICATION_OPTIONS
+  );
+  const title = notificationOptions.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
+  return self.registration.showNotification(title, notificationOptions);
 });
