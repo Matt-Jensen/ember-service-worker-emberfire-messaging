@@ -77,7 +77,11 @@ Customize this addon by adding any of the following to the `config/environment.j
 var ENV = {
   'esw-emberfire-messaging': {
     firebaseVersion: '4.2.0', // default (Firebase version used by SW)
-    defaultBackgroundMessageTitle: 'New Message' // default (fallback title for background message)
+    defaultBackgroundMessageTitle: 'New Message', // default (fallback title for background message)
+    notificationOptions: {
+      //All supported notification options can be passed here && payload should have data key without the notification key
+      vibrate: [200, 100, 200, 300]
+    }
   }
 };
 ```
