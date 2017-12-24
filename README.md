@@ -43,7 +43,7 @@ Step 3: Use the Firebase Message Service to request the user's permission and su
 
 ```js
 export default default Route.extend({
-  firebaseMessage: inject(),
+  firebaseMessage: service(),
 
   actions: {
     requestUserPermission() {
