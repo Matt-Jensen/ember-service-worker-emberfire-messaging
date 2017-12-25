@@ -37,7 +37,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
   const notificationOptions = Object.assign({},
     notification,
     data,
-    NOTIFICATION_OPTIONS
+    NOTIFICATION_OPTIONS //console.log(NOTIFICATION_OPTIONS), shows => [object object] and is not merging in the object correctly. How can we parse it into an object correctly?
   );
   const title = notificationOptions.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
    return self.registration.showNotification(title, notificationOptions).then(notificationEvent => {
