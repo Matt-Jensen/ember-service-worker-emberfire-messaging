@@ -41,9 +41,9 @@ messaging.setBackgroundMessageHandler(function (payload) {
   );
   const title = notificationOptions.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
    return self.registration.showNotification(title, notificationOptions).then(notificationEvent => {
-    if (notificationOptions.timeOut) {
+    //if (notificationOptions.timeOut) {
       let notif = notificationEvent.notification;
-      setTimeout(() => notif.close(), notificationOptions.timeOut);
-    }
+      setTimeout(() => notif.close(), 10000);
+    //}
   });
 });
