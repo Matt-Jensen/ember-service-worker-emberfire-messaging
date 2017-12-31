@@ -91,8 +91,9 @@ function showNotification(title, body, data) {
   self.registration.showNotification(title, notificationOptions);
   return;
 }
-self.addEventListener('notificationclick', function (event) {
-  console.log('notification click called');
+
+self.onnotificationclick = function (event) {
+  console.log('New notification click called');
 
   console.log('event.notification object');
   console.log(event.notification);
@@ -138,4 +139,8 @@ self.addEventListener('notificationclick', function (event) {
     var message = event.notification.data.body;
     return showNotification(title, message);
   }));
-});
+};
+
+// self.addEventListener('notificationclick', function (event) {
+
+// });
