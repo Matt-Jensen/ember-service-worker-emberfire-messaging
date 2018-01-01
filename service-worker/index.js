@@ -84,7 +84,7 @@ function showNotification(title, body, data) {
   var notificationOptions = {
     body: body,
     //icon: icon ? icon : 'images/touch/chrome-touch-icon-192x192.png',
-    tag: 'agent_request',
+    tag: 'request',
     data: data
   };
 
@@ -123,7 +123,8 @@ self.onnotificationclick = function (event) {
       throw new Error();
     }
     return clients.matchAll({
-      type: "window"
+      type: "window",
+      includeUncontrolled: !0
     }).then(function (clientList) {
       for (var i = 0; i < clientList.length; i++) {
         var client = clientList[i];
@@ -140,7 +141,3 @@ self.onnotificationclick = function (event) {
     return showNotification(title, message);
   }));
 };
-
-// self.addEventListener('notificationclick', function (event) {
-
-// });
