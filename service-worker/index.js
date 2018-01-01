@@ -123,8 +123,7 @@ self.onnotificationclick = function (event) {
       throw new Error();
     }
     return clients.matchAll({
-      type: "window",
-      includeUncontrolled: !0
+      type: "window"
     }).then(function (clientList) {
       for (var i = 0; i < clientList.length; i++) {
         var client = clientList[i];
@@ -136,8 +135,8 @@ self.onnotificationclick = function (event) {
     });
   }).catch(function (err) {
     console.error('Unable to retrieve data', err);
-    var title = 'You Missed a Request';
-    var message = event.notification.data.body;
+    var title = `Missed a ${event.notification.title} Request`;
+    var message = event.notification.body;
     return showNotification(title, message);
   }));
 };
