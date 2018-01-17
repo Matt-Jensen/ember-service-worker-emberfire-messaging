@@ -8,6 +8,8 @@ module.exports = {
   env: {
     browser: true
   },
-  rules: {
+  globals: {
+    firebase: true,
+    importScripts: true
   }
 };
