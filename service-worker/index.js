@@ -30,7 +30,13 @@ const globalNotification = JSON.parse(NOTIFICATION);
  * @return {Promise} - resolves {NotificationEvent}
  */
 messaging.setBackgroundMessageHandler(function(payload) {
-  const { notification = {} } = payload;
+  /*
+   For this custom `setBackgroundMessageHandler` to be invoked
+   by FCM the `data` parameter must be used, as using `notification`
+   will only invoke a default background handler:
+   https://github.com/firebase/quickstart-js/issues/134
+   */
+  const notification = payload.notification || payload.data || {};
   const title = notification.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
 
   /**
