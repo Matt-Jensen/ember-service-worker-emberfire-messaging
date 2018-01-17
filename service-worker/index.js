@@ -1,5 +1,4 @@
 import {
-  VERSION,
   API_KEY,
   AUTH_DOMAIN,
   DATABASE_URL,
@@ -7,7 +6,8 @@ import {
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
   FIREBASE_VERSION,
-  DEFAULT_BACKGROUND_MESSAGE_TITLE
+  DEFAULT_BACKGROUND_MESSAGE_TITLE,
+  NOTIFICATION
 } from 'ember-service-worker-emberfire-messaging/service-worker/config';
 
 importScripts(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`);
@@ -23,13 +23,27 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
+const globalNotification = JSON.parse(NOTIFICATION);
 
 /**
  * Called when user is not viewing web page
- * @return {Promise} NotificationEvent
+ * @return {Promise} - resolves {NotificationEvent}
  */
 messaging.setBackgroundMessageHandler(function(payload) {
-  const { notification = {} } = payload;
+  /*
+   For this custom `setBackgroundMessageHandler` to be invoked
+   by FCM the `data` parameter must be used, as using `notification`
+   will only invoke a default background handler:
+   https://github.com/firebase/quickstart-js/issues/134
+   */
+  const notification = payload.notification || payload.data || {};
   const title = notification.title || DEFAULT_BACKGROUND_MESSAGE_TITLE;
-  return self.registration.showNotification(title, notification);
+
+  /**
+   * Overwrite global notification options
+   * with individual notification's options
+   * @type {Object}
+   */
+  const options = Object.assign({}, globalNotification, notification);
+  return self.registration.showNotification(title, options);
 });

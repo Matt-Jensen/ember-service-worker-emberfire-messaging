@@ -77,17 +77,19 @@ Customize this addon by adding any of the following to the `config/environment.j
 var ENV = {
   'esw-emberfire-messaging': {
     firebaseVersion: '4.2.0', // default (Firebase version used by SW)
-    defaultBackgroundMessageTitle: 'New Message' // default (fallback title for background message)
+    defaultBackgroundMessageTitle: 'New Message', // default (fallback title for background message)
+    notification: { vibrate: [200, 100, 200] } // optional global notification settings
   }
 };
 ```
+Possible global [notification options](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification) will be overwritten by any individual [FCM notification options](https://firebase.google.com/docs/cloud-messaging/http-server-ref#table2c).  Browser support of various notification options may vary.
 
 ## Triggering a Firebase Message
 To test your app's Firebase Messaging try the following in the terminal:
 
 ```sh
 curl -X POST -H "Authorization: key=<YOUR_SERVER_KEY>" -H "Content-Type: application/json" -d '{
-  "notification": {
+  "data": {
     "title": "Portugal vs. Denmark",
     "body": "5 to 1",
     "icon": "firebase-logo.png",
