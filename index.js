@@ -7,7 +7,8 @@ const DEFAULT_OPTIONS = {
   firebaseVersion: '4.2.0',
   defaultBackgroundMessageTitle: 'New Message',
   projectId: undefined,
-  messagingSenderId: undefined
+  messagingSenderId: undefined,
+  notification: {}
 };
 
 module.exports = {
@@ -22,6 +23,13 @@ module.exports = {
       (config['esw-emberfire-messaging'] || {})
     );
 
+    /*
+     Stringify global notification
+     options object for service worker
+     */
+    options.notification = JSON.stringify(options.notification);
+
+    // Convert app options into SW config file
     const configFile = new Config([appTree], options);
     return mergeTrees([swTree, configFile]);
   }
