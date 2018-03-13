@@ -42,6 +42,9 @@ This Google Cloud Sender ID is not the same as your message sender ID.  **You ca
 Step 3: Use the Firebase Message Service to request the user's permission and subscribe to new message events.
 
 ```js
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
 export default Route.extend({
   firebaseMessage: service(),
 
