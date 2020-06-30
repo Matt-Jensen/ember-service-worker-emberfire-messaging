@@ -99,7 +99,7 @@ curl -X POST -H "Authorization: key=<YOUR_SERVER_KEY>" -H "Content-Type: applica
     "icon": "firebase-logo.png",
     "click_action": "http://localhost:4200"
   },
-  "to": <DEVICE_REGISTRATION_TOKEN>
+  "to": "<DEVICE_REGISTRATION_TOKEN>"
 }' "https://fcm.googleapis.com/fcm/send"
 ```
 `YOUR_SERVER_KEY` can be found in the firebase console under Project Settings > Cloud Messaging > Server key.
