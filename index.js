@@ -4,7 +4,7 @@ const Config = require('./lib/config');
 const mergeTrees = require('broccoli-merge-trees');
 
 const DEFAULT_OPTIONS = {
-  firebaseVersion: '4.2.0',
+  firebaseVersion: '7.15.0',
   defaultBackgroundMessageTitle: 'New Message',
   projectId: undefined,
   messagingSenderId: undefined,
