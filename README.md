@@ -15,6 +15,7 @@ Step 1: basic setup is done in the `config/environment.js` file:
 // Ensure Emberfire is correctly configured
 var ENV = {
   firebase: {
+    appId: 'abc',
     apiKey: 'xyz',
     authDomain: 'YOUR-FIREBASE-APP.firebaseapp.com',
     databaseURL: 'https://YOUR-FIREBASE-APP.firebaseio.com',
@@ -79,7 +80,7 @@ Customize this addon by adding any of the following to the `config/environment.j
 ```js
 var ENV = {
   'esw-emberfire-messaging': {
-    firebaseVersion: '4.2.0', // default (Firebase version used by SW)
+    firebaseVersion: '7.15.0', // default (Firebase version used by SW)
     defaultBackgroundMessageTitle: 'New Message', // default (fallback title for background message)
     notification: { vibrate: [200, 100, 200] } // optional global notification settings
   }
@@ -111,14 +112,27 @@ curl -X POST -H "Authorization: key=<YOUR_SERVER_KEY>" -H "Content-Type: applica
 * `cd ember-service-worker-emberfire-messaging`
 * `yarn`
 
-## Running Tests
+Installation
+------------------------------------------------------------------------------
 
-* `yarn test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+```
+ember install ember-service-worker-emberfire-messaging
+```
 
-## Building
 
-* `ember build`
+Usage
+------------------------------------------------------------------------------
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+[Longer description of how to use the addon in apps.]
+
+
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).

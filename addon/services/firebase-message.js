@@ -1,4 +1,4 @@
-import RSVP, { reject } from "rsvp";
+import RSVP from "rsvp";
 import Service from "@ember/service";
 import { inject as service } from "@ember/service";
 import { get, set } from "@ember/object";
@@ -16,15 +16,23 @@ export default Service.extend({
    * @type {Promise}
    * @resolves {firebase.messaging.Messaging}
    */
-  messaging: computed(function() {
-    return this.firebaseApp.messaging();
+  messaging: computed({
+    get() {
+      return this.firebaseApp.messaging();
+    },
+    set(_, value) {
+      return value;
+    }
   }),
 
   /**
    * onMessage event subscribers
-   * @type {Array}
+   * @type {Function[]}
    */
-  _subscribers: [],
+  _subscribers: computed({
+    get() { return []; },
+    set(_, value) { return value; }
+  }),
 
   /**
    * Firebase Messaging token
@@ -36,10 +44,15 @@ export default Service.extend({
    * Is Fastboot env
    * @return {Boolean}
    */
-  _isFastboot: computed(function() {
-    return Boolean(
-      get(getOwner(this).lookup("service:fastboot") || {}, "isFastBoot")
-    );
+  _isFastboot: computed({
+    get() {
+      return Boolean(
+        get(getOwner(this).lookup("service:fastboot") || {}, "isFastBoot")
+      );
+    },
+    set(_, value) {
+      return value;
+    }
   }),
 
   /**
@@ -52,7 +65,7 @@ export default Service.extend({
       "service:firebase-message onMessage requires a function",
       typeof fn === "function"
     );
-    this._subscribers.addObject(fn);
+    this._subscribers.push(fn);
     return this._subscribers.indexOf(fn);
   },
 
@@ -66,25 +79,37 @@ export default Service.extend({
       "service:firebase-message offMessage requires a function",
       typeof fn === "function"
     );
-    this._subscribers.removeObject(fn);
+    const index = this._subscribers.indexOf(fn);
+    this._subscribers.splice(index, 1);
     return this._subscribers.indexOf(fn);
   },
 
   /**
-   * Sugar for a firebase:
-   *  `messaging.requestPermission()` & `messaging.getToken()`
-   *  promise chain
-   *
+   * Request user permission and resolves FCM registration token
    * Wait until after service worker registration or firebase
    * messaging service will attempt to load the default messaging SW.
-   *
    * @return {Promise}
    * @resolves {String} token
    */
   initialize() {
     return this.serviceWorkerReady().then(() =>
-      this.messaging.then(message => message.requestPermission().then(this.getToken.bind(this)))
+      this.requestPermission().then(this.getToken.bind(this))
     );
+  },
+
+  /**
+   * Requests user permission for notifications
+   * using native method and falling back to
+   * deprecated firebase API
+   * @return {Promise}
+   * @resolves {string} permission
+   */
+  requestPermission() {
+    if (Notification && typeof Notification.requestPermission === "function") {
+      return Notification.requestPermission();
+    }
+
+    return this.messaging.then(message => message.requestPermission());
   },
 
   /**
@@ -98,7 +123,7 @@ export default Service.extend({
         if (token) {
           return set(this, "token", token);
         } else {
-          return reject(
+          return RSVP.Promise.reject(
             new EmberError(
               "No Instance ID token available. Request permission to generate one."
             )
@@ -113,10 +138,12 @@ export default Service.extend({
 
     if (this._isFastboot === false) {
       // Invalidate and request a new token when invalidated by FCM
-      this.messaging.then(message => message.onTokenRefresh(() => {
-        set(this, "token", "");
-        this.getToken();
-      }));
+      this.messaging.then(message =>
+        message.onTokenRefresh(() => {
+          set(this, "token", "");
+          this.getToken();
+        })
+      );
 
       /**
        * Invoke subscribers queue `onMessage`
@@ -134,9 +161,11 @@ export default Service.extend({
        *   }
        * }
        */
-      this.messaging.then(message => message.onMessage(payload =>
-        this._subscribers.forEach(fn => fn(payload))
-      ));
+      this.messaging.then(message =>
+        message.onMessage(payload =>
+          this._subscribers.forEach(fn => fn(payload))
+        )
+      );
     }
   },
 

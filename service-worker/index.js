@@ -1,4 +1,5 @@
 import {
+  APP_ID,
   API_KEY,
   AUTH_DOMAIN,
   DATABASE_URL,
@@ -15,6 +16,7 @@ importScripts(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-m
 
 firebase.initializeApp({
   apiKey: API_KEY,
+  appId: APP_ID,
   authDomain: AUTH_DOMAIN,
   databaseURL: DATABASE_URL,
   projectId: PROJECT_ID,
