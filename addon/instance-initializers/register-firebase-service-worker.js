@@ -3,7 +3,6 @@
  * `/firebase-messaging-sw.js` instead using the registered ember service worker
  * registered by ember-service-worker
  * @param {Ember.Application} applicationInstance
- * @param {navigator} _navigator
  */
 export function initialize(applicationInstance, _navigator) {
   if (typeof FastBoot === 'undefined') {
@@ -18,7 +17,7 @@ export function initialize(applicationInstance, _navigator) {
       }
 
       _navigator.serviceWorker.ready.then((reg) => {
-        return firebase.messaging().useServiceWorker(reg);
+        return firebase.messaging().then(message => message.useServiceWorker(reg));
       });
     }
   }
